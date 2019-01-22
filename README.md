@@ -1,2 +1,1 @@
-"Oikea kansio" 
-"#toimiiks" 
+ChatBot Projekti
