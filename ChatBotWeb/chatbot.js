@@ -78,18 +78,19 @@ var messages = [];
                     answered = true;
                  }
                  
-                 if (msg.includes("päivämäärä"))
+                 if (msg.includes("paivamaara"))
                  {
-//                     String timeStamp = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
-//                     vastaus += "Nyt on " + timeStamp;
+                     var d = new Date();
+                     SetText("Botti: Nyt on " + d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear());
                      
                      answered = true;
                  }
                  
                  if (msg.includes("kello"))
                  {
-//                     String timeStamp = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-//                     vastaus += "Kello on " + timeStamp;
+					 
+                     var d = new Date();
+                     SetText("Botti: kello on " + d.getHours() + ":" + d.getMinutes());
                      
                      answered = true;
                  }
