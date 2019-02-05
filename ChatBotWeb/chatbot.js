@@ -116,35 +116,35 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                  }
                  
 				 
-				 // haetaan vastaus kannasta
+				 // haetaan vastaus kannasta--------------------------
 				 
-				var answerID = 0;
-				$.get("lataa.php?k=" + msg, function(data)
+				if (answered == false)
 				{
-					answerID = parseInt(data);
-				});
-				 
-				 
-				var idx = questions.indexOf(msg);
-				if (idx > -1)
-				{
-					$.get("lataa.php?v=" + answerID[idx], function(data)
+					var answerID = -1;
+					$.get("lataa.php?k=" + msg, function(data)
 					{
-						SetText("Botti: " + data)
+						answerID = parseInt(data);
+						
+						$.get("lataa.php?v=" + answerID, function(data)
+						{
+							SetText("Botti: " + data)
+						});
+						
+						if (answerID != -1)
+						{
+							answered = true;
+						}
+						else
+						{
+							// lähettää viestin tietokantaan, jos botti ei osannut vastata
+							Send(msg);
+							SetText("Viesti lähetetty kantaan.");
+							answered == false;
+						}
+						
 					});
-					 
-				 answered = true;
 				}
-				 
-				 
-				 
-				 
-                 // lähettää viestin tietokantaan, jos botti ei osannut vastata
-                 if (answered == false)
-                 {
-					 Send(msg);
-					 SetText("Botti: En osaa vastata.");
-                 }    
+				  
             }
             else
             {

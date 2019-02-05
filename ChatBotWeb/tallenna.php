@@ -3,8 +3,8 @@
 
 	if (isset($_POST['k']))
 	{
-		$servername = "http://localhost:3306/";
-		$username = "";
+		$servername = "localhost";
+		$username = "root";
 		$password = "";
 		$dbname = "chatbot";
 			
@@ -16,7 +16,7 @@
 			die("Connection failed");
 		}
 
-		$sql = "INSERT INTO kysymykset (Kysymys, vID) VALUES ('" . $_POST['k'] . "', '0')";
+		$sql = "INSERT INTO kysymykset (Kysymys, vID) VALUES ('" . $_POST['k'] . "', '1')";
 				
 		if ($conn->query($sql) === TRUE) 
 		{
