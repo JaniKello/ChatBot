@@ -1,9 +1,13 @@
 var messages = [];
- var newMessage = document.getElementById("newMsg"); 
- var msgTable = document.getElementById("messages"); 
+
+var questions = []; // haetaan kannasta tähän kaikki kysymykset
+var answerID = [];	// jokaiselle kysymykselle on oma vastausID, jolla voidaan hakea kannasta tiettyä vastausta
+
+var newMessage = document.getElementById("newMsg"); 
+var msgTable = document.getElementById("messages"); 
  
- var kysymys = -1;
- var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
+var question = -1;
+var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
  
  ChatBot("");
  
@@ -18,19 +22,24 @@ var messages = [];
 	}
  });
  
+ function LoadQuestions()
+ {
+	 
+ }
+ 
  function ChatBot(msg)
  {
 	//omateksti -------------------------------------
 	if (msg != "")
 	{
-		SetText("Sina:" + msg);
+		SetText("Sina: " + msg);
 	}
 	
 	//botin vastaus --------------------------------
 	
 	var vastaus = "Botti: ";
         
-        if (kysymys == 0 || kysymys < 0)
+        if (question == 0 || question < 0)
         {
             if (msg != "")
             {
@@ -95,32 +104,25 @@ var messages = [];
                      answered = true;
                  }
                  
-                 //tallentaa käyttäjän antaman tekstin, jos botti ei osannut vastata
+                 // lähettää viestin tietokantaan, jos botti ei osannut vastata
                  if (answered == false)
                  {
-//                     try 
-//                     {
-//                         SaveQ(msg);
-//                     } 
-//                     catch (IOException ex) 
-//                     {
-//                         Logger.getLogger(ChatBot.class.getName()).log(Level.SEVERE, null, ex);
-//                     }
+					 Send(msg);
                  }    
             }
             else
             {
-                if (kysymys == -1)
+                if (question == -1)
                 {
                     vastaus += "Minkä alan opiskelija olet?";
-                    kysymys = 1;
+                    question = 1;
                     SetText(vastaus);
                 }
             }
         }
         else
         {
-            switch (kysymys)
+            switch (question)
             {
                 case 1:
                     
@@ -128,7 +130,7 @@ var messages = [];
                     {
                         vastaus += "Ok";
                         ala = 1;
-                        kysymys = 0;
+                        question = 0;
                         SetText(vastaus);
                     }
                     
@@ -136,7 +138,7 @@ var messages = [];
                     {
                         vastaus += "Ok";
                         ala = 2;
-                        kysymys = 0;
+                        question = 0;
                         SetText(vastaus);
                     }
                     
@@ -144,7 +146,7 @@ var messages = [];
                     {
                         vastaus += "Ok";
                         ala = 3;
-                        kysymys = 0;
+                        question = 0;
                         SetText(vastaus);
                     }
                     
@@ -153,7 +155,20 @@ var messages = [];
         }
 		
 		
-	}// function ChatBot()
+	}
+	
+	
+	// lähettää viestin tietokantaan
+	function Send(x)
+	{
+		$.ajax({
+		type: 'POST',
+		data: { k: x },
+		url: 'tallenna.php',
+		// dataType: 'json',
+		async: true,
+	  });
+	}
 	
 	function randomNum (min, max)
     {
