@@ -1,7 +1,7 @@
 var messages = [];
 
-var questions = []; // haetaan kannasta tähän kaikki kysymykset
-var answerID = [];	// jokaiselle kysymykselle on oma vastausID, jolla voidaan hakea kannasta tiettyä vastausta
+// var questions = []; // haetaan kannasta tähän kaikki kysymykset
+// var answerID = [];	// jokaiselle kysymykselle on oma vastausID, jolla voidaan hakea kannasta tiettyä vastausta
 
 var newMessage = document.getElementById("newMsg"); 
 var msgTable = document.getElementById("messages"); 
@@ -22,10 +22,22 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 	}
  });
  
- function LoadQuestions()
+/*  function LoadQuestions()
  {
-	 
- }
+	 // lataa kysymykset kannasta ja laittaa ne questions-tauluun
+	 // laittaa niiden vastaus iideet answerID-tauluun
+	$.get("lataa.php", function(data)
+	{
+		var res = data.split("\n");
+		
+		for (var i = 0; i < res.length - 1; i++)
+		{
+			var d = res[i].split("_");
+			answerID.push(parseInt(d[0]));
+			questions.push(d[1]);
+		}
+	});
+ } */
  
  function ChatBot(msg)
  {
@@ -36,7 +48,6 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 	}
 	
 	//botin vastaus --------------------------------
-	
 	var vastaus = "Botti: ";
         
         if (question == 0 || question < 0)
@@ -73,7 +84,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                     var laskutoimitus = "";
                     
                     for(var i = 0; i < msg.length; i++)
-                    { // if (!isNaN(parseInt(msg.charAt(i), 10))) {
+                    {
                        if(!isNaN(parseInt(msg.charAt(i), 10)) || msg.charAt(i) == '-' || msg.charAt(i) == '+' || msg.charAt(i) == '*' || 
                                msg.charAt(i) == '/' || msg.charAt(i) == '.' || msg.charAt(i) == '^' || msg.charAt(i) == '(' || msg.charAt(i) == ')')
                        {
@@ -104,10 +115,35 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                      answered = true;
                  }
                  
+				 
+				 // haetaan vastaus kannasta
+				 
+				var answerID = 0;
+				$.get("lataa.php?k=" + msg, function(data)
+				{
+					answerID = parseInt(data);
+				});
+				 
+				 
+				var idx = questions.indexOf(msg);
+				if (idx > -1)
+				{
+					$.get("lataa.php?v=" + answerID[idx], function(data)
+					{
+						SetText("Botti: " + data)
+					});
+					 
+				 answered = true;
+				}
+				 
+				 
+				 
+				 
                  // lähettää viestin tietokantaan, jos botti ei osannut vastata
                  if (answered == false)
                  {
 					 Send(msg);
+					 SetText("Botti: En osaa vastata.");
                  }    
             }
             else
@@ -163,10 +199,10 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 	{
 		$.ajax({
 		type: 'POST',
-		data: { k: x },
+		data: { 'k': x },
 		url: 'tallenna.php',
 		// dataType: 'json',
-		async: true,
+		
 	  });
 	}
 	
