@@ -2,12 +2,11 @@
 <html>
 	<head>
 		<title>Chat bot</title>
-		<link rel="stylesheet" type="text/css" href="chatbot.css">
+		<link rel="stylesheet" type="text/css" href="chatbotcss.css">
 	</head>
 	<body>
-
-		<div>
-			<h>Chat bot</h>
+		<div id="Bot" ><a href="login.php" type="button" class="btn btn-default subs-btn">Admin</a>
+			<h1>Chat bot</h1>
 			
 			<table id="messages">
 			  <tr>
@@ -16,7 +15,8 @@
 			  
 			</table>
 
-			<input id="newMsg" type="text" name="newMessage">
+			<input id="newMsg" type="text" name="newMessage" placeholder="Kirjoita tähän" onfocus="placeHolder()">
+			
 		
 		</div>
 

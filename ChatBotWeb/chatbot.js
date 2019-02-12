@@ -22,7 +22,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 	}
  });
  
-/*  function LoadQuestions()
+ function LoadQuestions()
  {
 	 // lataa kysymykset kannasta ja laittaa ne questions-tauluun
 	 // laittaa niiden vastaus iideet answerID-tauluun
@@ -37,7 +37,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 			questions.push(d[1]);
 		}
 	});
- } */
+ } 
  
  function ChatBot(msg)
  {
@@ -137,9 +137,9 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 						else
 						{
 							// lähettää viestin tietokantaan, jos botti ei osannut vastata
-							Send(msg);
-							SetText("Viesti lähetetty kantaan.");
 							answered == false;
+							SetText("Viesti lähetetty kantaan.");
+							Send(msg);
 						}
 						
 					});
@@ -205,7 +205,6 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 		
 	  });
 	}
-	
 	function randomNum (min, max)
     {
         var i = min + (Math.random() * ((max - min) + 1));
