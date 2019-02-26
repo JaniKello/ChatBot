@@ -10,5 +10,9 @@
     exit();
 }
 echo"Vastaus lisätty tietokantaan!";
+
+$lastid = mysqli_insert_id($conn);
+echo "last id : ".$lastid;
+	 $vID = mysqli_query($conn, "UPDATE kysymykset SET vID = '" . $lastid . "' WHERE ID = '" . $_GET['ID'] . "'");
 exit();
 ?>

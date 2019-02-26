@@ -1,27 +1,34 @@
  <!DOCTYPE html>
 <html>
-	<head>
+<meta charset="utf-8">
+	<head >
 		<title>Chat bot</title>
 		<link rel="stylesheet" type="text/css" href="chatbotcss.css">
 	</head>
 	<body>
-		<div id="Bot" ><a href="login.php" type="button" class="btn btn-default subs-btn">Admin</a>
+	
+		<div id="Bot">
+		
 			<h1>Chat bot</h1>
+			<a href="login.php" type="button" class="btn btn-default subs-btn">Admin</a>
 			
-			<table id="messages">
-			  <tr>
-				<td>-</td>
-			  </tr>
-			  
-			</table>
-
+			<div id="msgbox">
+			
+				<table id="messages">
+				  <tr>
+					<td></td>
+				  </tr>
+				  
+				</table>
+			
+			</div>
+			
 			<input id="newMsg" type="text" name="newMessage" placeholder="Kirjoita tähän" onfocus="placeHolder()">
 			
-		
 		</div>
-
+		
 	</body>
 </html> 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
- <script src="chatbot.js"></script> 
+ <script src="chatbot.js"></script>

@@ -7,7 +7,7 @@
 	
 	
 	$ID = $_GET['ID'];
-	$delete = "DELETE FROM `kysymykset` WHERE `kysymykset`.`ID` = '$ID'";
+	$delete = "DELETE FROM `vastaukset` WHERE `vastaukset`.`ID` = '$ID'";
 	if (mysqli_query($conn, $delete)) {
 		echo "Kysymys poistettu";
 		header('Location: AdminPage.php'); //If book.php is your main page where you list your all records

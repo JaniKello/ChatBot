@@ -1,7 +1,7 @@
 <html>
 <body>
-<form action="insert.php?ID=<?php echo $_GET['ID'];?>" method="post"><input type="submit" />
-Anna vastaus <input type="text" name="Vastaus" /><br><br>
+<form action="olemassaoleva.php?ID=<?php echo $_GET['ID'];?>" method="post">
+Liitä olemassa oleva vastaus id:llä <input type="text" name="Vastaus" /><br><br>
 <input type="submit" />
 </form>
 <?php
@@ -33,4 +33,3 @@ exit();
 ?>
 </body>
 </html>
-	

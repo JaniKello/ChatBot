@@ -45,6 +45,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 	if (msg != "")
 	{
 		SetText("Sina: " + msg);
+		updateScroll();
 	}
 	
 	//botin vastaus --------------------------------
@@ -127,7 +128,11 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 						
 						$.get("lataa.php?v=" + answerID, function(data)
 						{
-							SetText("Botti: " + data)
+							if (data != "")
+							{
+								SetText("Botti: " + data)
+								updateScroll();
+							}
 						});
 						
 						if (answerID != -1)
@@ -136,9 +141,10 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
 						}
 						else
 						{
-							// lähettää viestin tietokantaan, jos botti ei osannut vastata
+							// tallentaa viestin tietokantaan, jos vastausta ei löytynyt
 							answered == false;
 							SetText("Viesti lähetetty kantaan.");
+							updateScroll();
 							Send(msg);
 						}
 						
@@ -152,9 +158,12 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                 {
                     vastaus += "Minkä alan opiskelija olet?";
                     question = 1;
+					SetText("");
                     SetText(vastaus);
                 }
             }
+			
+			updateScroll();
         }
         else
         {
@@ -162,7 +171,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
             {
                 case 1:
                     
-                    if (msg.includes("tietotek"))
+                    if (msg.includes("tietotek") || msg.includes("Tietotek"))
                     {
                         vastaus += "Ok";
                         ala = 1;
@@ -170,7 +179,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                         SetText(vastaus);
                     }
                     
-                    if (msg.includes("konetek"))
+                    if (msg.includes("konetek") || msg.includes("Konetek"))
                     {
                         vastaus += "Ok";
                         ala = 2;
@@ -178,7 +187,7 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                         SetText(vastaus);
                     }
                     
-                    if (msg.includes("sähkötek"))
+                    if (msg.includes("sähkötek") || msg.includes("Sähkötek"))
                     {
                         vastaus += "Ok";
                         ala = 3;
@@ -188,11 +197,16 @@ var ala = 0; // 1 = tieto, 2 = kone, 3 = sähkö
                     
                     break; 
             }
+			
+			updateScroll();
         }
-		
-		
 	}
 	
+	function updateScroll()
+	{
+		var element = document.getElementById("msgbox");
+		element.scrollTop = element.scrollHeight;
+	}
 	
 	// lähettää viestin tietokantaan
 	function Send(x)
